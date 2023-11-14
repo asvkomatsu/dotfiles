@@ -1,0 +1,37 @@
+config:
+  backup: true
+  banner: true
+  create: true
+  dotpath: dotfiles
+  keepdot: false
+  link_dotfile_default: link
+  link_on_import: link
+  longkey: false
+dotfiles:
+  f_bashrc:
+    src: bashrc
+    dst: ~/.bashrc
+  f_gitconfig:
+    src: gitconfig
+    dst: ~/.gitconfig
+  d_qtile:
+    src: config/qtile
+    dst: ~/.config/qtile
+  d_screenlayout:
+    src: screenlayout
+    dst: ~/.screenlayout
+  d_wallpapers:
+    src: wallpapers
+    dst: ~/wallpapers
+  d_dunst:
+    src: config/dunst
+    dst: ~/.config/dunst
+profiles:
+  loki:
+    dotfiles:
+    - f_bashrc
+    - f_gitconfig
+    - d_qtile
+    - d_screenlayout
+    - d_wallpapers
+    - d_dunst
