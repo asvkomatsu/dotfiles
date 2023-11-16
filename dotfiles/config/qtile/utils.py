@@ -16,7 +16,7 @@ AUTOSTART_APPS = [
 
 RUN_APP_LAUNCHER_SHELL_CMD = 'rofi -show drun -config ~/.config/rofi/ultrarofi.rasi'
 
-RUN_POWER_MENU = "rofi -show p -modi p:'rofi-power-menu' -theme ~/.config/rofi/ultratheme.rasi -theme-str 'window {width: 20em; height: 15em;} listview {lines: 6;}'"
+RUN_POWER_MENU = "rofi -show p -modi p:'~/.local/bin/rofi-power-menu' -theme ~/.config/rofi/ultratheme.rasi -theme-str 'window {width: 20em; height: 15em;} listview {lines: 6;}'"
 
 BRIGHTNESS_DIR = 'amdgpu_bl0'
 """

@@ -35,3 +35,11 @@ profiles:
     - d_screenlayout
     - d_wallpapers
     - d_dunst
+  DTI-12052:
+    dotfiles:
+    - f_bashrc
+    - f_gitconfig
+    - d_qtile
+    - d_screenlayout
+    - d_wallpapers
+    - d_dunst
