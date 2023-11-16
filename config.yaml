@@ -26,6 +26,9 @@ dotfiles:
   d_dunst:
     src: config/dunst
     dst: ~/.config/dunst
+  d_rofi:
+    src: config/rofi
+    dst: ~/.config/rofi
 profiles:
   loki:
     dotfiles:
@@ -35,6 +38,7 @@ profiles:
     - d_screenlayout
     - d_wallpapers
     - d_dunst
+    - d_rofi
   DTI-12052:
     dotfiles:
     - f_bashrc
@@ -43,3 +47,4 @@ profiles:
     - d_screenlayout
     - d_wallpapers
     - d_dunst
+    - d_rofi
