@@ -3,13 +3,13 @@ from libqtile import layout
 from colors import color_schema
 
 layout_defaults = dict(
-    margin=2,
+    margin=0,
     border_focus=color_schema['yellow'],
     border_normal=color_schema['bg'],
 )
 
 floating_defaults = dict(
-    margin=2,
+    margin=0,
     border_focus=color_schema['red'],
     border_normal=color_schema['yellow'],
 )

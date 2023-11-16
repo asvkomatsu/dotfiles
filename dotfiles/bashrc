@@ -311,3 +311,12 @@ function __setprompt
     PS4='\[${DARKGRAY}\]+\[${NOCOLOR}\] '
 }
 PROMPT_COMMAND='__setprompt'
+
+
+#######################################################
+# ASDF
+#######################################################
+
+. "$HOME/.asdf/asdf.sh"
+. "$HOME/.asdf/completions/asdf.bash"
+. ~/.asdf/plugins/java/set-java-home.bash

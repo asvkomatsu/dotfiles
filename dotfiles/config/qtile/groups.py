@@ -30,13 +30,13 @@ group_definitions = [
         'name': 'misc1',
         'label': 'M1',
         'matches': [],
-        'layout': 'columns'
+        'layout': 'max'
     },
     {
         'name': 'misc2',
         'label': 'M2',
         'matches': [],
-        'layout': 'columns'
+        'layout': 'max'
     },
 ]
 

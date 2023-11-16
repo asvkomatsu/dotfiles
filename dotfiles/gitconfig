@@ -1,5 +1,11 @@
 [user]
 	name = André Komatsu
+	{%@@ if profile == "loki" @@%}
 	email = andre.komatsu.tjmsp@gmail.com
+	{%@@ elif profile == "DTI-12052" @@%}
+	email = andre.komatsu@tjmsp.jus.br
+	{%@@ endif @@%}
 [core]
 	editor = vim
+
+
