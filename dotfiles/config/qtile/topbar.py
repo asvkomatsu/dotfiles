@@ -3,6 +3,8 @@ import os
 from libqtile import bar, widget
 from libqtile.config import Screen
 
+from dateutil.tz import *
+
 from colors import color_schema
 
 import widgets
@@ -58,7 +60,7 @@ screens = [
                 separator,
                 widget.CurrentLayout(padding=0),
                 widget.Spacer(),
-                widget.Clock(format='%d %b %H:%M:%S'),
+                widget.Clock(format='%d %b %H:%M:%S', timezone=gettz("America/Sao_Paulo")),
                 widget.Spacer(),
                 widgets.Bluetooth(
                     hci=BLUETOOTH_DEVICE_HCI_PATH,

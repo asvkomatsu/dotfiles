@@ -12,6 +12,7 @@ AUTOSTART_APPS = [
     "killall -qw blueman-applet; blueman-applet &",
     "killall -qw udiskie; udiskie &",
     "killall -qw mate-screensaver; mate-screensaver &",
+    "/usr/share/pje-office/pjeOffice.sh &",
 ]
 
 RUN_APP_LAUNCHER_SHELL_CMD = 'rofi -show drun -config ~/.config/rofi/ultrarofi.rasi'
@@ -49,7 +50,7 @@ LOCK_X_SESSION_SHELL_CMD = 'loginctl lock-session'
 Shell command to lock X session
 """
 
-KEYBOARD_LAYOUTS = ['us intl']
+KEYBOARD_LAYOUTS = ['us intl', 'pt br']
 """
 List of keyboard layouts which should be available in system
 """

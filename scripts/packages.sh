@@ -5,8 +5,11 @@ sudo apt-get install \
 	aptitude \
 	curl \
 	dotdrop \
+	firmware-realtek \
+	fonts-liberation \
 	htop \
 	libgdk-pixbuf2.0-0 \
+	libu2f-dev \
 	nala \
 	remmina \
 	tree \

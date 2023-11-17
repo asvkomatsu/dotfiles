@@ -6,5 +6,6 @@ source scripts/rofi.sh
 source scripts/qtile.sh
 source scripts/lazygit.sh
 source scripts/vscode.sh
+source scripts/docker.sh
 #source scripts/asdf.sh
 
