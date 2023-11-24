@@ -1,4 +1,4 @@
-# ~/.bashrc: executed by bash(1) for non-login shells.
+# ~/.#bashrc: executed by bash(1) for non-login shells.
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
 
@@ -144,11 +144,12 @@ alias cs='clear; ls'
 alias f='pwd'
 alias h='history'
 alias k='kill'
-alias ls='ls -ah'
+alias ls='ls --color=auto -ah'
 alias ll='ls -l'
 alias q='exit'
 alias t='time'
 alias o='xdg-open'
+alias grep='grep --color=auto'
 
 alias ..='cd ..'
 alias ...='cd ../..'
@@ -175,7 +176,7 @@ alias mntd='df -hT'
 # ========================================================================
 #  ENV VARS
 # ========================================================================
-export PATH="~/.local/bin":$PATH
+export PATH="~/.local/share/nvim/mason/bin":"~/.local/bin":$PATH
 export EDITOR=vim
 export VISUAL=vim
 export CLICOLOR=1
@@ -320,3 +321,6 @@ PROMPT_COMMAND='__setprompt'
 . "$HOME/.asdf/asdf.sh"
 . "$HOME/.asdf/completions/asdf.bash"
 . ~/.asdf/plugins/java/set-java-home.bash
+
+# Load Angular CLI autocompletion.
+source <(ng completion script)
