@@ -142,6 +142,14 @@ lazy.setup({
             },
         },
         opts = {
+            defaults = {
+                mappings = {
+                    i = {
+                        ['<C-u>'] = false,
+                        ['<C-d>'] = false,
+                    },
+                },
+            },
             extensions = {
                 fzf = {
                     fuzzy = true,
@@ -149,7 +157,7 @@ lazy.setup({
                     override_file_sorter = true,
                     case_mode = "smart_case",
                 }
-            }
+            },
         },
     },
 
@@ -185,20 +193,15 @@ lazy.setup({
 
     -- file explorer
     {
-        'kyazdani42/nvim-tree.lua',
+        'nvim-neo-tree/neo-tree.nvim',
+        branch = "v3.x",
+        dependencies = {
+            "nvim-lua/plenary.nvim",
+            "nvim-tree/nvim-web-devicons",
+            "MunifTanjim/nui.nvim",
+            "3rd/image.nvim",
+        },
         opts = {
-            hijack_cursor = false,
-            on_attach = function(bufnr)
-                local bufmap = function(lhs, rhs, desc)
-                    vim.keymap.set('n', lhs, rhs, {buffer = bufnr, desc = desc})
-                end
-
-                local api = require('nvim-tree.api')
-
-                bufmap('L', api.node.open.edit, 'Expand folder or go to file')
-                bufmap('H', api.node.navigate.parent_close, 'Close parent folder')
-                bufmap('gh', api.tree.toggle_hidden_filter, 'Toggle hidden files')
-            end
         },
     },
 
@@ -212,8 +215,14 @@ lazy.setup({
         },
     },
 
-    { 'mfussenegger/nvim-jdtls' },
+    -- improved moviment inside the visible area of the editor
+    {
+        'smoka7/hop.nvim',
+        version = "*",
+        opts = {},
+    },
 })
+
 
 --==========================
 -- LSP Configs
@@ -498,12 +507,6 @@ vim.lsp.handlers['textDocument/signatureHelp'] = vim.lsp.with(
     {border = 'rounded'}
 )
 
-local jdtls_config = {
-    cmd = {'/home/andre-komatsu/.local/share/nvim/mason/bin/jdtls'},
-    root_dir = vim.fs.dirname(vim.fs.find({'gradlew', '.git', 'mvnw'}, { upward = true })[1]),
-}
-require('jdtls').start_or_attach(jdtls_config)
-
 --======================================================
 -- KEYBINDINGS
 --======================================================
@@ -527,8 +530,11 @@ require('jdtls').start_or_attach(jdtls_config)
 -- 		- silent: whether or not the keybinding can show a message
 -- 		- expr: if true, gives the chance to use vimscript / lua to calculate rhs
 
+-- easy esc
+vim.keymap.set('i', 'jj', '<esc>')
+
 -- edit config file
-vim.keymap.set({'n'}, '<leader>=', '<cmd>edit $MYVIMRC<cr>')
+vim.keymap.set({'n'}, '<leader>=', '<cmd>edit ~/repos/dotfiles/dotfiles/config/nvim/init.lua<cr>')
 
 -- copy to system clipboard
 vim.keymap.set({'n', 'x'}, '<leader>y', '"+y')
@@ -545,11 +551,47 @@ vim.keymap.set({'n'}, '<leader>q', '<cmd>quit<cr>')
 -- select all text in current buffer
 vim.keymap.set('n', '<leader>a', ':keepjumps normal! ggVG<cr>')
 
---=====================
--- Telescope shortcuts
+-- Remap for dealing with word wrap
+vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr=true, silent=true })
+vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr=true, silent=true })
 
-    -- toggle nvim tree
-    vim.keymap.set('n', '<leader>e', '<cmd>NvimTreeToggle<cr>')
+-- Increment/decrement
+vim.keymap.set('n', '+', '<C-a>')
+vim.keymap.set('n', '-', '<C-x>')
+
+-- Split window
+vim.keymap.set('n', '<leader>sh', '<cmd>split<cr>')
+vim.keymap.set('n', '<leader>sv', '<cmd>vsplit<cr>')
+
+-- Navigate on windows
+vim.keymap.set('n', '<C-h>', '<C-w>h')
+vim.keymap.set('n', '<C-j>', '<C-w>j')
+vim.keymap.set('n', '<C-k>', '<C-w>k')
+vim.keymap.set('n', '<C-l>', '<C-w>l')
+
+--=====================
+-- Hop shortcuts
+
+    local hop = require('hop')
+    local directions = require('hop.hint').HintDirection
+
+    vim.keymap.set('n', '<leader>s', '<cmd>HopWord<cr>', { desc = "hop start" })
+--=====================
+
+--=====================
+-- Diagnostics shortcuts
+
+    vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc='Go to previous diagnostic message' })
+    vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc='Go to next diagnostic message' })
+    -- vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc='Go to previous diagnostic message' })
+    -- vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc='Go to previous diagnostic message' })
+--=====================
+
+--=====================
+-- Neotree shortcuts
+
+    -- toggle neotree
+    vim.keymap.set('n', '<leader>e', '<cmd>Neotree toggle=true<cr>')
 --=====================
 
 --=====================
@@ -580,17 +622,15 @@ vim.keymap.set('n', '<leader>a', ':keepjumps normal! ggVG<cr>')
 -- OPTIONS
 --======================================================
 
--- preserve the indentation of a virtual line (wrap)
-vim.opt.breakindent = true
-
--- convert tab to spaces
-vim.opt.expandtab = true
-
 -- highlight the results of the previous search
 vim.opt.hlsearch = false
 
 -- ignores uppercase letters when executing a search
 vim.opt.ignorecase = true
+
+-- ignores uppercase letters when executing a search
+-- unless the search term has an uppercase letter
+vim.opt.smartcase = true
 
 -- enables mouse for every mode
 vim.opt.mouse = 'a'
@@ -598,12 +638,14 @@ vim.opt.mouse = 'a'
 -- show line numbers
 vim.opt.number = true
 
+-- preserve the indentation of a virtual line (wrap)
+vim.opt.breakindent = true
+
+-- convert tab to spaces
+vim.opt.expandtab = true
+
 -- amount of characters used to indent a line
 vim.opt.shiftwidth = 4
-
--- ignores uppercase letters when executing a search
--- unless the search term has an uppercase letter
-vim.opt.smartcase = true
 
 -- number of spaces of a tab
 vim.opt.tabstop = 4
@@ -623,3 +665,24 @@ vim.cmd('colorscheme ofirkai')
 
 -- disable current mode (done on lualine)
 vim.opt.showmode = false
+
+-- save undo history
+vim.o.undofile = true
+
+-- keep signcolumn on by default
+vim.wo.signcolumn = 'yes' 
+
+-- decrease update time
+vim.o.updatetime = 250
+vim.o.timeoutlen = 300
+
+-- encoding options
+vim.scriptencoding = "utf-8"
+vim.opt.encoding = "utf-8"
+vim.opt.fileencoding = "utf-8"
+
+-- backspace options
+vim.opt.backspace = { "start", "eol", "indent" }
+
+-- ignore folder for completion
+vim.opt.wildignore:append({ "*/node_modules/*" })
