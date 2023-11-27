@@ -1,3 +1,7 @@
+-- redefines the leader key
+vim.g.mapleader = ' '
+vim.g.mapllocaleader = ' '
+
 --======================================================
 -- PLUGINS
 --======================================================
@@ -37,110 +41,179 @@ end
 
 -- define list of plugins
 lazy.setup({
-    { 'ofirgall/ofirkai.nvim' },
-    { 'nvim-lualine/lualine.nvim' },
-    { 'akinsho/bufferline.nvim', version = "*", dependencies = 'nvim-tree/nvim-web-devicons' },
-    { 'lukas-reineke/indent-blankline.nvim' },
-    { 'numToStr/Comment.nvim' },
+    -- Detect tabstop and shiftwidth automatically
+    { 'tpope/vim-sleuth' },
+
+    -- commands to manipulate surrounding chars ([{'"
     { 'tpope/vim-surround' },
+
+    -- enable reapeat command on plugin actions
     { 'tpope/vim-repeat' },
-    { 'kyazdani42/nvim-tree.lua' },
-    { 'nvim-telescope/telescope.nvim', tag='0.1.4', dependencies = 'nvim-lua/plenary.nvim' },
-    { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
-    { 'akinsho/toggleterm.nvim' },
-    { 'williamboman/mason.nvim' },
-    { 'williamboman/mason-lspconfig.nvim' },
-    { 'neovim/nvim-lspconfig' },
-    { 'hrsh7th/cmp-nvim-lsp' },
-    { 'hrsh7th/cmp-buffer' },
-    { 'hrsh7th/cmp-path' },
-    { 'hrsh7th/cmp-cmdline' },
-    { 'hrsh7th/nvim-cmp' },
+
+    -- LSP related plugins
     {
-        'L3MON4D3/LuaSnip',
-        dependencies = { 'rafamadriz/friendly-snippets' },
+        'neovim/nvim-lspconfig',
+        dependencies = {
+            -- automatically install LSPs to stdpath for neovim
+            'williamboman/mason.nvim',
+            'williamboman/mason-lspconfig.nvim',
+
+            -- useful status updates for LSP
+            { 'j-hui/fidget.nvim', opts={} },
+
+            -- additional lua configuration
+            'folke/neodev.nvim',
+        },
     },
+
+    -- autocompletion
+    {
+        'hrsh7th/nvim-cmp',
+        dependencies = {
+            -- snippet engine & its associated nvim-cmp source
+            'L3MON4D3/LuaSnip',
+            'saadparwaiz1/cmp_luasnip',
+
+            -- adds LSP completion capabilities
+            'hrsh7th/cmp-nvim-lsp',
+
+            -- adds a number of user-friendly snippets
+            'rafamadriz/friendly-snippets',
+
+            -- source for buffer words
+            'hrsh7th/cmp-buffer',
+
+            -- source for filesystem paths
+            'hrsh7th/cmp-path',
+
+            -- source for vim's cmdline
+            'hrsh7th/cmp-cmdline',
+        },
+    },
+
+    -- show pending keystrokes (keybindings help)
+    { 'folke/which-key.nvim', opts={} },
+
+    -- color scheme inspired on Monokai
+    {
+        'ofirgall/ofirkai.nvim',
+        opts = {
+            theme = nil,
+            remove_italics = false,
+        }
+    },
+
+    -- set lualine as statusline
+    {
+        'nvim-lualine/lualine.nvim',
+        opts = {
+            options = {
+                --theme = require('ofirkai.statuslines.lualine').theme,
+                icons_enabled = true,
+                component_separators = '|',
+                section_separators = '',
+                disabled_filetypes = {
+                    statusline = { 'NvimTree' }
+                }
+            }
+        },
+    },
+
+    -- add indentation guides even on blank lines
+    {
+        'lukas-reineke/indent-blankline.nvim',
+        main = 'ibl',
+        opts = {
+            indent = {
+                char = '|',
+            },
+        },
+    },
+
+    -- fuzzy finder (files, lsp, etc)
+    {
+        'nvim-telescope/telescope.nvim',
+        branch = '0.1.x',
+        dependencies = {
+            'nvim-lua/plenary.nvim',
+            {
+                'nvim-telescope/telescope-fzf-native.nvim',
+                build = 'make'
+            },
+        },
+        opts = {
+            extensions = {
+                fzf = {
+                    fuzzy = true,
+                    override_generic_sorter = true,
+                    override_file_sorter = true,
+                    case_mode = "smart_case",
+                }
+            }
+        },
+    },
+
+    -- highlight, edit, and navigate code
+    {
+        'nvim-treesitter/nvim-treesitter',
+        dependencies = {
+            'nvim-treesitter/nvim-treesitter-textobjects',
+        },
+        build = ':TSUpdate',
+    },
+
+    -- show open buffers as tabs on top of window
+    {
+        'akinsho/bufferline.nvim',
+        version = "*",
+        dependencies = 'nvim-tree/nvim-web-devicons',
+        opts = {
+            --highlights = require('ofirkai.tablines.bufferline').highlights,
+            options = {
+                mode = 'buffers',
+                offsets = { { filetype = 'NvimTree', text = 'File Explorer', text_align = 'center' } },
+                separator_style = 'slant',
+                show_buffer_icons = true,
+                numbers = 'ordinal',
+                max_name_length = 40,
+            },
+        },
+    },
+
+    -- smarter comments
+    { 'numToStr/Comment.nvim' },
+
+    -- file explorer
+    {
+        'kyazdani42/nvim-tree.lua',
+        opts = {
+            hijack_cursor = false,
+            on_attach = function(bufnr)
+                local bufmap = function(lhs, rhs, desc)
+                    vim.keymap.set('n', lhs, rhs, {buffer = bufnr, desc = desc})
+                end
+
+                local api = require('nvim-tree.api')
+
+                bufmap('L', api.node.open.edit, 'Expand folder or go to file')
+                bufmap('H', api.node.navigate.parent_close, 'Close parent folder')
+                bufmap('gh', api.tree.toggle_hidden_filter, 'Toggle hidden files')
+            end
+        },
+    },
+
+    -- integrates terminal into nvim window
+    {
+        'akinsho/toggleterm.nvim',
+        opts = {
+            open_mapping = '<C-g>',
+            direction = 'horizontal',
+            shade_terminals = true
+        },
+    },
+
     { 'mfussenegger/nvim-jdtls' },
 })
-
--- ofirkai configuration
-require('ofirkai').setup {
-    theme = nil,
-    remove_italics = false,
-}
-
--- lualine configuration
-require('lualine').setup({
-    options = {
-        theme = require('ofirkai.statuslines.lualine').theme,
-        icons_enabled = true,
-        component_separators = '|',
-        section_separators = '',
-        disabled_filetypes = {
-            statusline = { 'NvimTree' }
-        }
-    }
-})
-
--- bufferline configuration
-require('bufferline').setup {
-    highlights = require('ofirkai.tablines.bufferline').highlights,
-    options = {
-        mode = 'buffers',
-        offsets = { { filetype = 'NvimTree', text = 'File Explorer', text_align = 'center' } },
-        separator_style = 'slant',
-        show_buffer_icons = true,
-        numbers = 'ordinal',
-        max_name_length = 40,
-    },
-}
-
--- indent-blankline configuration
-require('ibl').setup {
-    indent = {
-        char = '|',
-    },
-}
-
--- comment configuration
-require('Comment').setup {
-}
-
--- nvim-tree configuration
-require('nvim-tree').setup {
-    hijack_cursor = false,
-    on_attach = function(bufnr)
-        local bufmap = function(lhs, rhs, desc)
-            vim.keymap.set('n', lhs, rhs, {buffer = bufnr, desc = desc})
-        end
-
-        local api = require('nvim-tree.api')
-
-        bufmap('L', api.node.open.edit, 'Expand folder or go to file')
-        bufmap('H', api.node.navigate.parent_close, 'Close parent folder')
-        bufmap('gh', api.tree.toggle_hidden_filter, 'Toggle hidden files')
-    end
-}
-
--- telescope configuration
-require('telescope').setup {
-    extensions = {
-        fzf = {
-            fuzzy = true,
-            override_generic_sorter = true,
-            override_file_sorter = true,
-            case_mode = "smart_case",
-        }
-    }
-}
--- require('telescope').load_extension('fzf')
-
--- toggleterm configuration
-require('toggleterm').setup {
-    open_mapping = '<C-g>',
-    direction = 'horizontal',
-    shade_terminals = true
-}
 
 --==========================
 -- LSP Configs
@@ -453,9 +526,6 @@ require('jdtls').start_or_attach(jdtls_config)
 -- 		- buffer: true -> current file / number -> id of open buffer
 -- 		- silent: whether or not the keybinding can show a message
 -- 		- expr: if true, gives the chance to use vimscript / lua to calculate rhs
-
--- redefines the leader key
-vim.g.mapleader = ' '
 
 -- edit config file
 vim.keymap.set({'n'}, '<leader>=', '<cmd>edit $MYVIMRC<cr>')
