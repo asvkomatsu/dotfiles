@@ -37,3 +37,8 @@ asdf global neovim stable
 asdf plugin-add rust https://github.com/asdf-community/asdf-rust.git
 asdf install rust 1.74.0
 asdf global rust 1.74.0
+
+# odin
+asdf plugin add odin
+asdf install odin dev-2023-11
+asdf global odin dev-2023-11

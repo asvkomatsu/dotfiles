@@ -176,7 +176,7 @@ alias mntd='df -hT'
 # ========================================================================
 #  ENV VARS
 # ========================================================================
-export PATH="~/.local/share/nvim/mason/bin":"~/.local/bin":$PATH
+export PATH="~/.cargo/bin":"~/.local/share/nvim/mason/bin":"~/.local/bin":$PATH
 export EDITOR=vim
 export VISUAL=vim
 export CLICOLOR=1

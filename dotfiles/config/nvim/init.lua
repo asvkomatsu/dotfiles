@@ -311,6 +311,11 @@ lspconfig.marksman.setup {
     capabilities = lsp_capabilities,
 }
 
+-- Odin
+lspconfig.ols.setup {
+    capabilities = lsp_capabilities,
+}
+
 -- Python
 lspconfig.pyright.setup {
     capabilities = lsp_capabilities,
