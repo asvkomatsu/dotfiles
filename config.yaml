@@ -29,9 +29,6 @@ dotfiles:
   d_rofi:
     src: config/rofi
     dst: ~/.config/rofi
-  d_nvim:
-    src: config/nvim
-    dst: ~/.config/nvim
 profiles:
   loki:
     dotfiles:
@@ -42,7 +39,6 @@ profiles:
     - d_wallpapers
     - d_dunst
     - d_rofi
-    - d_nvim
   DTI-12052:
     dotfiles:
     - f_bashrc
@@ -52,4 +48,3 @@ profiles:
     - d_wallpapers
     - d_dunst
     - d_rofi
-    - d_nvim
