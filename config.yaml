@@ -39,6 +39,15 @@ profiles:
     - d_wallpapers
     - d_dunst
     - d_rofi
+  ananta:
+    dotfiles:
+    - f_bashrc
+    - f_gitconfig
+    - d_qtile
+    - d_screenlayout
+    - d_wallpapers
+    - d_dunst
+    - d_rofi
   DTI-12052:
     dotfiles:
     - f_bashrc

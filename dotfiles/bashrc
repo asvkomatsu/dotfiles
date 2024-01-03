@@ -322,5 +322,7 @@ PROMPT_COMMAND='__setprompt'
 . "$HOME/.asdf/completions/asdf.bash"
 . ~/.asdf/plugins/java/set-java-home.bash
 
+{%@@ if profile == "DTI-12052" @@%}
 # Load Angular CLI autocompletion.
 source <(ng completion script)
+{%@@ endif @@%}
