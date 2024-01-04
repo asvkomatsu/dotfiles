@@ -8,6 +8,7 @@ from libqtile.widget.backlight import ChangeDirection
 from groups import groups
 from utils import (
     TERMINAL,
+    FILE_EXPLORER,
     MOD_KEY,
     RUN_APP_LAUNCHER_SHELL_CMD,
     RUN_POWER_MENU,
@@ -85,6 +86,7 @@ keys = [
         desc='Toggle between split and unsplit sides of stack',
     ),
     Key([MOD_KEY], 'Return', lazy.spawn(TERMINAL), desc='Launch terminal'),
+    Key([MOD_KEY, 'control'], 'Return', lazy.spawn(FILE_EXPLORER), desc='Launch thunar'),
     Key([MOD_KEY], 'Tab', lazy.next_layout(), desc='Toggle between layouts'),
     Key([MOD_KEY], 'q', lazy.window.kill(), desc='Kill focused window'),
     Key(

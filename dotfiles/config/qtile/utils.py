@@ -2,6 +2,7 @@ from pathlib import Path
 
 MOD_KEY = 'mod4'
 TERMINAL = 'alacritty'
+FILE_EXPLORER = 'thunar'
 DEFAULT_FONT = 'JetBrainsMono Nerd Font'
 
 AUTOSTART_APPS = [
