@@ -8,6 +8,7 @@ AUTOSTART_APPS = [
     "xset r rate 300 25",
     "sh ~/.screenlayout/monitor.sh",
     "feh --bg-center --randomize ~/wallpapers/*",
+    "/usr/libexec/polkit-mate-authentication-agent-1 &",
     "killall -qw dunst; dunst &",
     "killall -qw blueman-applet; blueman-applet &",
     "killall -qw udiskie; udiskie &",

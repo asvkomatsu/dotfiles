@@ -5,6 +5,7 @@ sudo apt-get install \
 	apt-transport-https \
 	aptitude \
 	arandr \
+	ccache \
 	clang \
 	cmake \
 	curl \
@@ -13,6 +14,7 @@ sudo apt-get install \
 	firmware-realtek \
 	foliate \
 	fonts-liberation \
+	gparted \
 	htop \
 	libgdk-pixbuf2.0-0 \
 	libu2f-udev \
