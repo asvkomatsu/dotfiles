@@ -26,7 +26,7 @@ wmname = "LG3D"
 # General Configuration
 auto_fullscreen = True
 bring_front_click = "floating_only"
-cursor_warp = True   # warp cursor to center of focused window on focus change
+cursor_warp = False   # warp cursor to center of focused window on focus change
 dgroups_key_binder = None
 dgroups_app_rules = []  # type: list
 floats_kept_above = True

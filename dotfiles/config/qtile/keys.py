@@ -96,7 +96,7 @@ keys = [
     ),
     #Key([MOD_KEY, 'control'], 'q', lazy.shutdown(), desc='Shutdown Qtile'),
     Key(
-        [MOD_KEY], 'space',
+        [MOD_KEY, 'control'], 'k',
         lazy.widget['keyboardlayout'].next_keyboard(),
         desc='Change keyboard layout'
     ),
